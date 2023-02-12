@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.halemia.familymanager.dao.mapper.UserDao">
+    <select id="getUserById" parameterType="int" resultType="com.halemia.familymanager.dao.pojo.User">
+        SELECT * FROM t_user WHERE id = #{id}
+    </select>
+    <select id="insert" parameterType="com.halemia.familymanager.dao.pojo.User" resultType="int">
+        INSERT into t_user(name,password,admin) values(#{name},#{password},#{admin})
+    </select>
+    <select id="update" parameterType="com.halemia.familymanager.dao.pojo.User" resultType="boolean">
+        UPDATE t_user set name=#{name},password=#{password} WHERE id = #{id}
+    </select>
+    <select id="delete" parameterType="int" >
+        DELETE FROM t_user WHERE id = #{id}
+    </select>
+
+</mapper>
