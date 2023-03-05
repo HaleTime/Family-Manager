@@ -1,6 +1,6 @@
 package com.halemia.familymanager.service.impl;
 
-import com.halemia.familymanager.dao.mapper.UserDao;
+import com.halemia.familymanager.dao.mapper.CommonDao;
 import com.halemia.familymanager.dao.pojo.User;
 import com.halemia.familymanager.service.UserService;
 import org.springframework.stereotype.Service;
@@ -16,25 +16,26 @@ import javax.annotation.Resource;
 public class UserServiceImpl implements UserService {
 
     @Resource
-    private UserDao userDao;
+    private CommonDao commonDao;
 
     @Override
-    public User getUserById(int id) {
-        return userDao.getUserById(id);
+    public User getUserById(Long id) {
+        return commonDao.getById(id, User.class);
     }
 
     @Override
-    public int insert(User user) {
-        return userDao.insert(user);
+    public Long insert(User user) {
+        commonDao.insert(user);
+        return user.getId();
     }
 
     @Override
     public boolean update(User user) {
-        return userDao.update(user);
+        return commonDao.update(user);
     }
 
     @Override
-    public boolean delete(int id) {
-        return userDao.delete(id);
+    public boolean delete(Long id) {
+        return commonDao.delete(id, User.class);
     }
 }

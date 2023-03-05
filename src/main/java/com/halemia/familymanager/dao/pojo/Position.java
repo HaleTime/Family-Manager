@@ -12,13 +12,11 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-@DbTable("t_user")
-public class User extends BaseDao implements Serializable {
+@DbTable("t_position")
+public class Position extends BaseDao implements Serializable {
 
     private Long id;
-    private String name;
-    private String password;
-    private String admin;
-    @DbField("open_id")
-    private Long openId;
+    @DbField("position_name")
+    private String positonName;
+
 }

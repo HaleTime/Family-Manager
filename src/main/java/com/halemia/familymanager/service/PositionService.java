@@ -1,6 +1,6 @@
 package com.halemia.familymanager.service;
 
-import com.halemia.familymanager.dao.pojo.User;
+import com.halemia.familymanager.dao.pojo.Position;
 import org.springframework.stereotype.Service;
 
 /**
@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
  * @Date: 2023/2/12 23:45
  */
 @Service
-public interface UserService {
+public interface PositionService {
 
-    User getUserById(Long id);
+    Position getPositionById(Long id);
 
-    Long insert(User user);
+    Long insert(Position position);
 
-    boolean update(User user);
+    boolean update(Position position);
 
     boolean delete(Long id);
 
