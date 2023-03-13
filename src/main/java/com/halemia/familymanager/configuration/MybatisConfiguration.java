@@ -1,5 +1,6 @@
 package com.halemia.familymanager.configuration;
 
+import com.halemia.familymanager.dao.interceptor.ResultInterceptor;
 import org.apache.ibatis.datasource.pooled.PooledDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -8,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 /**
  * @Description:
@@ -15,18 +17,16 @@ import javax.sql.DataSource;
  * @Date: 2023/2/12 23:10
  */
 
-//@Configuration
+@Configuration
 public class MybatisConfiguration {
 
-  /*  @Bean
-    public DataSource dataSource(){
-        return new PooledDataSource("com.mysql.jdbc.Driver", "jdbc:mysql://43.143.163.118:3306/family-manager", "root", "1993228");
-    }
-
+    //注册拦截器
     @Bean
-    public SqlSessionFactory sqlSessionFactory() throws Exception {
-        SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
-        sqlSessionFactory.setDataSource(dataSource());
-        return sqlSessionFactory.getObject();
-    }*/
+    public ResultInterceptor resultInterceptor(){
+        ResultInterceptor interceptor = new ResultInterceptor();
+        Properties properties = new Properties();
+        // 可以调用properties.setProperty方法来给拦截器设置一些自定义参数
+        interceptor.setProperties(properties);
+        return interceptor;
+    }
 }
