@@ -16,6 +16,16 @@ public class DBDataSourceProperties extends DataSourceProperties {
     @Override
     public void setPassword(String password) {
         RSA rsa = new RSA();
+
         super.setPassword(password);
+    }
+
+    public static void main(String[] args) {
+        RSA rsa = new RSA();
+        String privateKey = rsa.getPrivateKeyBase64();
+        String publicKey = rsa.getPublicKeyBase64();
+
+        System.out.println(privateKey);
+        System.out.println(publicKey);
     }
 }

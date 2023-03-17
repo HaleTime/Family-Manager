@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
  * @Date: 2023/3/5 21:13
  */
 @RestController
-@RequestMapping("/rest/api/family")
+@RequestMapping("/rest/api")
 public class FamilyController {
 
     @Autowired
     private FamilyService familyService;
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/family", method = RequestMethod.POST)
     public ResultResponse insert(@RequestBody Family family) {
         if (family.getFamilyName() == null) {
             return ResponseBuilder.fail("400", "Family name cannot be null!");
@@ -32,7 +32,7 @@ public class FamilyController {
         return ResponseBuilder.success(familyService.insert(family));
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/family", method = RequestMethod.PATCH)
     public ResultResponse update(@RequestBody Family family) {
         if (family.getFamilyName() == null) {
             return ResponseBuilder.fail("400", "Family name cannot be null!");
@@ -40,11 +40,16 @@ public class FamilyController {
         return ResponseBuilder.success(familyService.update(family));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResultResponse delte(Long id) {
+    @RequestMapping(value = "/family/{id}", method = RequestMethod.DELETE)
+    public ResultResponse delete(Long id) {
         if (id == null) {
             return ResponseBuilder.fail("400", "Family Id cannot be null!");
         }
         return ResponseBuilder.success(familyService.delete(id));
+    }
+
+    @RequestMapping(value = "/familes", method = RequestMethod.GET)
+    public ResultResponse list() {
+        return ResponseBuilder.success(familyService.getList());
     }
 }

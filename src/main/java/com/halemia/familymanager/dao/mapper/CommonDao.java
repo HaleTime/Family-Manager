@@ -11,8 +11,11 @@ public interface CommonDao {
     @SelectProvider(type = SqlProvider.class, method = "getById")
     <T extends Dao> T getById(@Param("id") Long id, Class<T> daoClass);
 
-    @SelectProvider(type = SqlProvider.class, method = "getById")
-    <T extends Dao> List<T> getByCondition(Map<String, Object> conditions, Class<T> dao);
+    @SelectProvider(type = SqlProvider.class, method = "getByCondition")
+    <T extends Dao> List<T> getByCondition(Map<String, Object> condistion, Class<T> daoClass);
+
+    @SelectProvider(type = SqlProvider.class, method = "getByDao")
+    <T extends Dao> List<T> getByDao(Dao dao);
 
     @InsertProvider(type = SqlProvider.class, method = "insert")
     Long insert(Dao dao);

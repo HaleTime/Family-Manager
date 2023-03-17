@@ -6,6 +6,7 @@ import com.halemia.familymanager.service.ItemService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Description:
@@ -37,5 +38,10 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public boolean delete(Long id) {
         return commonDao.delete(id, Item.class);
+    }
+
+    @Override
+    public List<Item> getList() {
+        return commonDao.getByDao(new Item());
     }
 }

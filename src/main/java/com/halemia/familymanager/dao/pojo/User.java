@@ -20,5 +20,5 @@ public class User extends BaseDao implements Serializable {
     private String password;
     private String admin;
     @DbField("open_id")
-    private Long openId;
+    private String openId;
 }

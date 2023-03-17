@@ -3,6 +3,8 @@ package com.halemia.familymanager.service;
 import com.halemia.familymanager.dao.pojo.Position;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Description:
  * @Author: shangchy
@@ -18,5 +20,7 @@ public interface PositionService {
     boolean update(Position position);
 
     boolean delete(Long id);
+
+    List<Position> getList();
 
 }

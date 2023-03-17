@@ -3,6 +3,8 @@ package com.halemia.familymanager.service;
 import com.halemia.familymanager.dao.pojo.Item;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Description:
  * @Author: shangchy
@@ -18,5 +20,7 @@ public interface ItemService {
     boolean update(Item item);
 
     boolean delete(Long id);
+
+    List<Item> getList();
 
 }

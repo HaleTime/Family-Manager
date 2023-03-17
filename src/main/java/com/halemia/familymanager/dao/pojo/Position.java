@@ -17,6 +17,6 @@ public class Position extends BaseDao implements Serializable {
 
     private Long id;
     @DbField("position_name")
-    private String positonName;
+    private String positionName;
 
 }

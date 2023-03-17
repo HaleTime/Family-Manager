@@ -3,6 +3,8 @@ package com.halemia.familymanager.service;
 import com.halemia.familymanager.dao.pojo.Family;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Description:
  * @Author: shangchy
@@ -18,5 +20,11 @@ public interface FamilyService {
     boolean update(Family family);
 
     boolean delete(Long id);
+
+    List<Family> getList();
+
+    String invite();
+
+    boolean join(String code);
 
 }

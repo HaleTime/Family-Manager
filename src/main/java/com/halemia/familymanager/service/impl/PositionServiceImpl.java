@@ -1,11 +1,13 @@
 package com.halemia.familymanager.service.impl;
 
 import com.halemia.familymanager.dao.mapper.CommonDao;
+import com.halemia.familymanager.dao.pojo.Item;
 import com.halemia.familymanager.dao.pojo.Position;
 import com.halemia.familymanager.service.PositionService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Description:
@@ -37,5 +39,10 @@ public class PositionServiceImpl implements PositionService {
     @Override
     public boolean delete(Long id) {
         return commonDao.delete(id, Position.class);
+    }
+
+    @Override
+    public List<Position> getList() {
+        return commonDao.getByDao(new Item());
     }
 }

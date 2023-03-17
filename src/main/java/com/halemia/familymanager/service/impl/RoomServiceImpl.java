@@ -6,6 +6,7 @@ import com.halemia.familymanager.service.RoomService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Description:
@@ -37,5 +38,10 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public boolean delete(Long id) {
         return commonDao.delete(id, Room.class);
+    }
+
+    @Override
+    public List<Room> getList() {
+        return commonDao.getByDao(new Room());
     }
 }

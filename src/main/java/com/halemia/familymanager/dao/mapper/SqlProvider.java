@@ -5,6 +5,7 @@ import com.halemia.familymanager.dao.annotation.DbField;
 import com.halemia.familymanager.dao.annotation.DbTable;
 import com.halemia.familymanager.dao.pojo.base.Dao;
 import org.apache.ibatis.builder.annotation.ProviderMethodResolver;
+import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description:
@@ -83,6 +85,46 @@ public class SqlProvider implements ProviderMethodResolver {
     public String getById(Long id, Class<? extends Dao> daoClass) {
         String tableName = getTableName(daoClass);
         return "SELECT * FROM " + tableName + " WHERE id = #{id}";
+    }
+
+    public String getByCondition(Map<String, Object> condistion, Class<? extends Dao> daoClass) {
+        String tableName = getTableName(daoClass);
+        SQL sql = new SQL();
+        sql.SELECT("*")
+                .FROM(tableName);
+        condistion.forEach((key, value) -> sql.WHERE(key + "=" + value));
+
+        return sql.toString();
+    }
+
+
+    public String getByDao(Dao dao) {
+        if (dao == null) {
+            throw new RuntimeException("Dao cannot be null!");
+        }
+        Class<? extends Dao> aClass = dao.getClass();
+        String tableName = getTableName(aClass);
+        SQL sql = new SQL();
+        sql.SELECT("*")
+                .FROM(tableName);
+        Field[] declaredFields = aClass.getDeclaredFields();
+        Arrays.stream(declaredFields).forEach(field -> {
+            field.setAccessible(true);
+            String key = field.getName();
+            Object value = null;
+            try {
+                value = field.get(dao);
+            } catch (IllegalAccessException e) {
+                LOGGER.error(e.getMessage(), e);
+            }
+            if (value == null) return;
+            DbField dbField = field.getAnnotation(DbField.class);
+            if (dbField != null) {
+                key = dbField.value();
+            }
+            sql.WHERE(key + "=" + value);
+        });
+        return sql.toString();
     }
 
     public String delete(Long id, Class<? extends Dao> daoClass) {

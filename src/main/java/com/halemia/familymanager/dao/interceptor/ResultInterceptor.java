@@ -1,5 +1,6 @@
 package com.halemia.familymanager.dao.interceptor;
 
+import com.halemia.familymanager.dao.pojo.base.Dao;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.executor.Executor;
@@ -28,8 +29,14 @@ public class ResultInterceptor implements Interceptor {
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
-        MapperMethod.ParamMap paramMap = (MapperMethod.ParamMap)invocation.getArgs()[1];
-        Class dao = (Class) paramMap.get("daoClass");
+        Object arg = invocation.getArgs()[1];
+        Class dao = null;
+        if (arg instanceof Dao) {
+            dao = arg.getClass();
+        }else {
+            MapperMethod.ParamMap paramMap = (MapperMethod.ParamMap) arg;
+            dao = (Class) paramMap.get("daoClass");
+        }
         MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
         List<ResultMap> resultMaps = mappedStatement.getResultMaps();
         ResultMap resultMap = resultMaps.get(0);
