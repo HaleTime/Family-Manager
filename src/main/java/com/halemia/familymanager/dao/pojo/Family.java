@@ -1,5 +1,6 @@
 package com.halemia.familymanager.dao.pojo;
 
+import com.halemia.familymanager.dao.annotation.DbField;
 import com.halemia.familymanager.dao.annotation.DbTable;
 import com.halemia.familymanager.dao.pojo.base.Dao;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import java.io.Serializable;
 public class Family extends Dao implements Serializable {
 
     private Long id;
+    @DbField("family_name")
     private String familyName;
 
 }

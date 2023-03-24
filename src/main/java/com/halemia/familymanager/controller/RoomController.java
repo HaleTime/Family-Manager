@@ -5,10 +5,7 @@ import com.halemia.familymanager.dao.pojo.Room;
 import com.halemia.familymanager.service.RoomService;
 import com.halemia.familymanager.utils.ResponseBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Description:
@@ -39,7 +36,7 @@ public class RoomController {
     }
 
     @RequestMapping(value = "/room/{id}", method = RequestMethod.DELETE)
-    public ResultResponse delete(Long id) {
+    public ResultResponse delete(@PathVariable("id") Long id) {
         if (id == null) {
             return ResponseBuilder.fail("400", "Room Id cannot be null!");
         }

@@ -7,10 +7,7 @@ import com.halemia.familymanager.service.FamilyService;
 import com.halemia.familymanager.service.UserService;
 import com.halemia.familymanager.utils.ResponseBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Description:
@@ -41,11 +38,19 @@ public class FamilyController {
     }
 
     @RequestMapping(value = "/family/{id}", method = RequestMethod.DELETE)
-    public ResultResponse delete(Long id) {
+    public ResultResponse delete(@PathVariable("id") Long id) {
         if (id == null) {
             return ResponseBuilder.fail("400", "Family Id cannot be null!");
         }
         return ResponseBuilder.success(familyService.delete(id));
+    }
+
+    @RequestMapping(value = "/family/{id}", method = RequestMethod.GET)
+    public ResultResponse get(@PathVariable("id") Long id) {
+        if (id == null) {
+            return ResponseBuilder.fail("400", "Family Id cannot be null!");
+        }
+        return ResponseBuilder.success(familyService.getFamilyById(id));
     }
 
     @RequestMapping(value = "/familes", method = RequestMethod.GET)

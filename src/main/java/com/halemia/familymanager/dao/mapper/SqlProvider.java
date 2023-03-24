@@ -84,16 +84,43 @@ public class SqlProvider implements ProviderMethodResolver {
 
     public String getById(Long id, Class<? extends Dao> daoClass) {
         String tableName = getTableName(daoClass);
-        return "SELECT * FROM " + tableName + " WHERE id = #{id}";
+        SQL sql = new SQL();
+        select(daoClass, sql);
+        sql.FROM(tableName).WHERE("id = #{id}");
+        return sql.toString();
+    }
+
+    /**
+     * 获取select内容
+     * @param daoClass
+     * @param sql
+     */
+    private void select(Class<? extends Dao> daoClass, SQL sql) {
+        Field[] declaredFields = daoClass.getDeclaredFields();
+        Arrays.stream(declaredFields).forEach(field -> {
+            String name = field.getName();
+            DbField annotation = field.getAnnotation(DbField.class);
+            String select = annotation == null ? name : annotation.value() + " as " + name;
+            sql.SELECT(select);
+        });
+        Class<?> superclass = daoClass.getSuperclass();
+        if (superclass == Dao.class) {
+            Field[] daoFields = superclass.getDeclaredFields();
+            Arrays.stream(daoFields).forEach(field -> {
+                String name = field.getName();
+                DbField annotation = field.getAnnotation(DbField.class);
+                String select = annotation == null ? name : annotation.value() + " as " + name;
+                sql.SELECT(select);
+            });
+        }
     }
 
     public String getByCondition(Map<String, Object> condistion, Class<? extends Dao> daoClass) {
         String tableName = getTableName(daoClass);
         SQL sql = new SQL();
-        sql.SELECT("*")
-                .FROM(tableName);
+        select(daoClass, sql);
+        sql.FROM(tableName);
         condistion.forEach((key, value) -> sql.WHERE(key + "=" + value));
-
         return sql.toString();
     }
 
